@@ -224,7 +224,7 @@ class Seq2SeqTrainer(transformers.trainer_seq2seq.Seq2SeqTrainer):
             "temperature": 1.,
             "top_p": 0.95,
             "do_sample": True,
-            "num_return_sequences": 1,
+            "num_return_sequences": 50,
         }
 
         if "attention_mask" in inputs:
