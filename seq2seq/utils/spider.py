@@ -5,7 +5,7 @@ from datasets.arrow_dataset import Dataset
 from transformers.tokenization_utils_base import PreTrainedTokenizerBase
 from seq2seq.utils.dataset import DataTrainingArguments, normalize, serialize_schema
 from seq2seq.utils.trainer import Seq2SeqTrainer, EvalPrediction
-
+from pdb import set_trace
 
 def spider_get_input(
     question: str,

@@ -1,6 +1,6 @@
 {
     "run_name": "t5+picard-spider-eval",
-    "model_name_or_path": "tscholak/cxmefzzi",
+    "model_name_or_path": "tscholak/3vnuv1vf",
     "dataset": "spider",
     "source_prefix": "",
     "schema_serialization_type": "peteshaw",
@@ -9,8 +9,8 @@
     "schema_serialization_with_db_content": true,
     "normalize_query": true,
     "target_with_db_id": true,
-    "output_dir": "/eval",
-    "cache_dir": "/transformers_cache",
+    "output_dir": "~/eval",
+    "cache_dir": "~/transformers_cache",
     "do_train": false,
     "do_eval": true,
     "fp16": false,
