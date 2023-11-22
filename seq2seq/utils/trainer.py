@@ -8,6 +8,7 @@ import numpy as np
 import time
 from pdb import set_trace
 
+import os
 import torch
 from torch import nn
 from typing import *
@@ -224,7 +225,7 @@ class Seq2SeqTrainer(transformers.trainer_seq2seq.Seq2SeqTrainer):
             "temperature": 1.,
             "top_p": 0.95,
             "do_sample": True,
-            "num_return_sequences": 50,
+            "num_return_sequences": 20,
         }
 
         if "attention_mask" in inputs:
@@ -238,6 +239,7 @@ class Seq2SeqTrainer(transformers.trainer_seq2seq.Seq2SeqTrainer):
         else:
             generation_inputs = inputs[self.model.main_input_name]
 
+        torch.cuda.empty_cache()
         generated_tokens = self.model.generate(
             generation_inputs,
             **gen_kwargs,
@@ -245,9 +247,8 @@ class Seq2SeqTrainer(transformers.trainer_seq2seq.Seq2SeqTrainer):
 
         batch_predictions = self.tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
         batch_predictions = np.array(batch_predictions, dtype=object).reshape(-1, gen_kwargs["num_return_sequences"])
-        if os.path.exists(f"{self.args.output_dir}/predictions.json"):
-            os.remove(f"{self.args.output_dir}/predictions.json")
-        with open(f"{self.args.output_dir}/predictions.json", "a") as f:
+        fname = f"{self.args.output_dir}/predictions_{self.args.seed}.json"
+        with open(fname, 'a') as f:
             for predictions in batch_predictions:
                 f.write(json.dumps({
                     "prediction": predictions.tolist(),
